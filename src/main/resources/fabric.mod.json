@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "rebindquickswap",
+	"version": "${version}",
+	"name": "Rebind Quick Swap",
+	"description": "Allows you to rebind the quick swap feature when in your inventory",
+	"authors": [
+		"Walksy"
+	],
+	"contact": {
+
+	},
+	"license": "MIT",
+	"icon": "assets/walksy/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"walksy.quickswaprebinder.RebindQuickSwapMod"
+		]
+	},
+	"mixins": [
+		"mixin.rebindquickswap.json"
+	],
+	"depends": {
+		"fabricloader": "*",
+		"minecraft": "*",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
