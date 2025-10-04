@@ -2,6 +2,7 @@ package walksy.quickswaprebinder.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
+import net.minecraft.client.gui.Click;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
@@ -23,14 +24,15 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(HandledScreen.class)
 public abstract class HandledScreenMixin {
+
     @Redirect(
             method = "mouseClicked",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/InputUtil;isKeyPressed(JI)Z"
+                    target = "Lnet/minecraft/client/gui/Click;hasShift()Z"
             )
     )
-    private boolean redirectClick(long handle, int keyCode) {
+    private boolean redirect1(Click instance) {
         return RebindQuickSwapMod.shouldQuickSwap();
     }
 
@@ -38,21 +40,10 @@ public abstract class HandledScreenMixin {
             method = "mouseReleased",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/InputUtil;isKeyPressed(JI)Z"
+                    target = "Lnet/minecraft/client/gui/Click;hasShift()Z"
             )
     )
-    private boolean redirectRelease(long handle, int keyCode) {
-        return RebindQuickSwapMod.shouldQuickSwap();
-    }
-
-    @Redirect(
-            method = "mouseReleased",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screen/ingame/HandledScreen;hasShiftDown()Z"
-            )
-    )
-    private boolean redirectDoubleClick$Release() {
+    private boolean redirect2(Click instance) {
         return RebindQuickSwapMod.shouldQuickSwap();
     }
 
