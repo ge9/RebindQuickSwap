@@ -5,15 +5,16 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 import walksy.quickswaprebinder.mixin.KeybindingAccessor;
 
 public class RebindQuickSwapMod implements ModInitializer {
-
+    public static KeyBinding.Category keybindCat = KeyBinding.Category.create(Identifier.of("quickswaprebinder"));
     public static KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(
-            new KeyBinding("Quick Swap Keybind", GLFW.GLFW_KEY_LEFT_SHIFT, "Walksy's Quick Swap Rebind"));
+            new KeyBinding("Quick Swap Keybind", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
     public static KeyBinding keyBinding2 = KeyBindingHelper.registerKeyBinding(
-            new KeyBinding("Quick Swap Keybind 2", GLFW.GLFW_KEY_LEFT_SHIFT, "Walksy's Quick Swap Rebind"));
+            new KeyBinding("Quick Swap Keybind 2", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
 
     @Override
     public void onInitialize() {
