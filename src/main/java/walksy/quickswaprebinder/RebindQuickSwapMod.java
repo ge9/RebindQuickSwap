@@ -2,19 +2,19 @@ package walksy.quickswaprebinder;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 import walksy.quickswaprebinder.mixin.KeybindingAccessor;
 
 public class RebindQuickSwapMod implements ModInitializer {
-    public static KeyBinding.Category keybindCat = KeyBinding.Category.create(Identifier.of("quickswaprebinder"));
-    public static KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(
-            new KeyBinding("Quick Swap Keybind", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
-    public static KeyBinding keyBinding2 = KeyBindingHelper.registerKeyBinding(
-            new KeyBinding("Quick Swap Keybind 2", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
+    public static KeyMapping.Category keybindCat = KeyMapping.Category.register(ResourceLocation.parse("quickswaprebinder"));
+    public static KeyMapping keyBinding = KeyBindingHelper.registerKeyBinding(
+            new KeyMapping("Quick Swap Keybind", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
+    public static KeyMapping keyBinding2 = KeyBindingHelper.registerKeyBinding(
+            new KeyMapping("Quick Swap Keybind 2", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
 
     @Override
     public void onInitialize() {
@@ -23,14 +23,14 @@ public class RebindQuickSwapMod implements ModInitializer {
 
     public static boolean shouldQuickSwap()
     {
-        int code = InputUtil.fromTranslationKey(keyBinding.getBoundKeyTranslationKey()).getCode();
-        boolean bl2 = ((KeybindingAccessor)keyBinding).getKey().getCategory() == InputUtil.Type.MOUSE;
-        boolean rtrn = (bl2 ? isMouseButtonPressed(MinecraftClient.getInstance().getWindow().getHandle(), code)
-                : isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), code));
-        int code2 = InputUtil.fromTranslationKey(keyBinding2.getBoundKeyTranslationKey()).getCode();
-        boolean bl22 = ((KeybindingAccessor)keyBinding2).getKey().getCategory() == InputUtil.Type.MOUSE;
-        boolean rtrn2 = (bl22 ? isMouseButtonPressed(MinecraftClient.getInstance().getWindow().getHandle(), code2)
-                : isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), code2));
+        int code = InputConstants.getKey(keyBinding.saveString()).getValue();
+        boolean bl2 = ((KeybindingAccessor)keyBinding).getKey().getType() == InputConstants.Type.MOUSE;
+        boolean rtrn = (bl2 ? isMouseButtonPressed(Minecraft.getInstance().getWindow().handle(), code)
+                : isKeyPressed(Minecraft.getInstance().getWindow().handle(), code));
+        int code2 = InputConstants.getKey(keyBinding2.saveString()).getValue();
+        boolean bl22 = ((KeybindingAccessor)keyBinding2).getKey().getType() == InputConstants.Type.MOUSE;
+        boolean rtrn2 = (bl22 ? isMouseButtonPressed(Minecraft.getInstance().getWindow().handle(), code2)
+                : isKeyPressed(Minecraft.getInstance().getWindow().handle(), code2));
 
         return rtrn || rtrn2;
     }
