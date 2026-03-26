@@ -1,19 +1,19 @@
 package walksy.quickswaprebinder;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 import walksy.quickswaprebinder.mixin.KeybindingAccessor;
 
 public class RebindQuickSwapMod implements ModInitializer {
-    public static KeyMapping.Category keybindCat = KeyMapping.Category.register(ResourceLocation.parse("quickswaprebinder"));
-    public static KeyMapping keyBinding = KeyBindingHelper.registerKeyBinding(
+    public static KeyMapping.Category keybindCat = KeyMapping.Category.register(Identifier.parse("quickswaprebinder"));
+    public static KeyMapping keyBinding = KeyMappingHelper.registerKeyMapping(
             new KeyMapping("Quick Swap Keybind", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
-    public static KeyMapping keyBinding2 = KeyBindingHelper.registerKeyBinding(
+    public static KeyMapping keyBinding2 = KeyMappingHelper.registerKeyMapping(
             new KeyMapping("Quick Swap Keybind 2", GLFW.GLFW_KEY_LEFT_SHIFT, keybindCat));
 
     @Override
